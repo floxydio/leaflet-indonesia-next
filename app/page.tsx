@@ -16,12 +16,6 @@ export default function Home() {
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
 
   useEffect(() => {
-    import("leaflet").then((L) => {
-      window.L = L;
-    });
-  }, []);
-
-  useEffect(() => {
     fetch("/indo.geojson")
       .then((response) => response.json())
       .then((data) => {
@@ -68,7 +62,7 @@ export default function Home() {
       setBounds(null);
     } else {
       const filteredFeatures = geoJSONFeatureCollection.features.filter((feature) =>
-        feature.properties?.state?.toLowerCase().includes(searchTerm.toLowerCase())
+        feature.properties?.state?.toLowerCase() === searchTerm.toLowerCase()
       );
 
       if (filteredFeatures.length > 0) {
